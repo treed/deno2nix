@@ -3,6 +3,7 @@
   linkFarm,
   writeText,
   deno2nix,
+  deno,
   ...
 }: let
   inherit (builtins) split elemAt fetchurl toJSON hashString baseNameOf;
@@ -21,6 +22,7 @@ in
             path = fetchurl {
               inherit url sha256;
               name = sanitizeDerivationName (baseNameOf url);
+              curlOptsList = [ "--user-agent" "Deno/${deno.version}" ];
             };
           }
           {
